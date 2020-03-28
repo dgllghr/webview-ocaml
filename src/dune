@@ -1,16 +1,22 @@
 (copy_files webview-c/webview.h)
 
+(rule
+ (targets c_flags.sexp c_library_flags.sexp c_flags.lines)
+ (deps    (:discover config/discover.exe))
+ (action  (run config/discover.exe)))
+
+(rule
+  (targets webview_sys.ml webview_stubs.c)
+  (deps (:first-dep webview_sys.c.ml) c_flags.lines)
+  (action (run %{bin:ppx_cstubs} %{first-dep} -o %{targets} -- %{read-lines:c_flags.lines} -DWEBVIEW_GTK -DWEBVIEW_IMPLEMENTATION -DWEBVIEW_STATIC)))
+
 (library
- (name webview_ocaml)
+ (name webview)
  (public_name webview-ocaml)
  (c_library_flags (:include c_library_flags.sexp))
  (foreign_stubs
   (language c)
-  (names webview)
-  (flags (:include c_flags.sexp) -O3 -DWEBVIEW_GTK))
- (libraries logs ctypes ctypes.foreign))
+  (names webview_stubs)
+  (flags (:include c_flags.sexp) -O2 -DWEBVIEW_GTK -DWEBVIEW_IMPLEMENTATION -DWEBVIEW_STATIC))
+ (libraries logs ctypes ppx_cstubs))
 
-(rule
- (targets c_flags.sexp c_library_flags.sexp)
- (deps    (:discover config/discover.exe))
- (action  (run config/discover.exe)))

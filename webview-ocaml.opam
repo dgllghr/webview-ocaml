@@ -11,6 +11,7 @@ depends: [
   "alcotest"
   "fmt"
   "logs"
+  "ppx_cstubs"
   "ctypes"
   "dune-configurator"
 ]
