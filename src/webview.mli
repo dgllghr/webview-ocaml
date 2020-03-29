@@ -1,8 +1,22 @@
 type t
 
-type error =
-  | InitError
+type error = int
 
-val make : string -> string -> int -> int -> bool -> (t, error) result
+module Handle : sig
+  type t
 
-val main : unit -> unit
+  val set_fullscreen: t -> bool -> unit
+
+  val eval: t -> string -> (unit, error) result
+
+  val exit: t -> unit
+
+  val terminate: t -> unit
+end
+
+type handler = Handle.t -> string -> unit
+
+val create: ?resizable:bool -> ?debug:bool -> ?handler:handler -> string ->
+  string -> int -> int -> t
+
+val run_blocking: t -> (unit, error) result

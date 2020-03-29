@@ -18,5 +18,5 @@
   (language c)
   (names webview_stubs)
   (flags (:include c_flags.sexp) -O2 -DWEBVIEW_GTK -DWEBVIEW_IMPLEMENTATION -DWEBVIEW_STATIC))
- (libraries logs ctypes ppx_cstubs))
+ (libraries logs ctypes ppx_cstubs ctypes.foreign))
 

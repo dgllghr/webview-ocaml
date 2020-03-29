@@ -8,11 +8,11 @@ maintainer: ["Dan Gallagher <dgllghr@fastmail.com>"]
 authors: ["Dan Gallagher <dgllghr@fastmail.com>"]
 depends: [
   "dune" {>= "2.4"}
-  "alcotest"
   "fmt"
   "logs"
   "ppx_cstubs"
   "ctypes"
+  "ctypes-foreign"
   "dune-configurator"
 ]
 build: [

@@ -12,4 +12,4 @@
  (description "\
 Webview (https://github.com/zserge/webview) bindings for OCaml
 ")
- (depends alcotest fmt logs ppx_cstubs ctypes dune-configurator))
+ (depends fmt logs ppx_cstubs ctypes ctypes-foreign dune-configurator))
