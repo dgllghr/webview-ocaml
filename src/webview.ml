@@ -13,12 +13,17 @@ let res_of_code success = function
 module Handle = struct
   type t = ((Wvs.webview, [ `Struct ]) Ctypes_static.structured) Ctypes.ptr
 
+  let set_title h = Wvs.set_title h
+
   let set_fullscreen h fullscreen =
     let fullscreen = if fullscreen then 1 else 0 in
     Wvs.set_fullscreen h fullscreen
 
   let eval h script =
     Wvs.eval h script |> res_of_code ()
+
+  let inject_css h css =
+    Wvs.inject_css h css |> res_of_code ()
 
   let terminate = Wvs.terminate
 end
@@ -53,3 +58,23 @@ let run_blocking webview =
   Wvs.run ~webview:webview;
   Ok ()
 
+let next_dispatch_fn_id =
+  let cnt = ref 0 in
+  let rec iter n =
+    let next = succ n in
+    if Wvs.dispatch_fn_registered n then
+      iter next
+    else
+      let () = cnt := next in
+      n
+  in
+  fun () -> iter !cnt
+
+let safe_dispatch fn_id fn (h: Handle.t) =
+  Fun.protect ~finally:(fun () -> Wvs.deregister_dispatch_fn fn_id) (fun () ->
+    fn h)
+
+let with_handle webview fn =
+  let fn_id = next_dispatch_fn_id () in
+  let ptr = Wvs.register_dispatch_fn fn_id (fun () -> safe_dispatch fn_id fn webview) in
+  Wvs.dispatch webview Wvs.dispatch_fn ptr

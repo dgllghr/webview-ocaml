@@ -16,7 +16,7 @@ let () =
   let output: (int option) ref = ref None in
   let test_handler (h: WvHandle.t) msg =
     Logs.debug (fun f -> f "Received message from the browser: %s" msg);
-    match WvHandle.eval h "alert('hello')" with
+    match WvHandle.eval h "1 + 1" with
     | Ok () ->
       Logs.debug (fun f -> f "Evaluated javascript");
       output := Some (int_of_string msg);

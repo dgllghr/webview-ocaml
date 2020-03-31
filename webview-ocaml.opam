@@ -13,7 +13,6 @@ depends: [
   "ppx_cstubs" {>= "0.3"}
   "ctypes" {>= "0.17"}
   "ctypes-foreign" {>= "0.4"}
-  "integers" {>= "0.3"}
   "dune-configurator" {>= "2.4"}
 ]
 build: [
