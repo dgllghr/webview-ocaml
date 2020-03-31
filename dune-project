@@ -1,5 +1,5 @@
 (lang dune 2.4)
-(name webview-ocaml)
+(name webview)
 (implicit_transitive_deps false)
 
 (generate_opam_files true)
@@ -8,7 +8,7 @@
 (source (github dgllghr/webview-ocaml))
 
 (package
- (name webview-ocaml)
+ (name webview)
  (synopsis "webview (https://github.com/zserge/webview) bindings for OCaml")
  (description "webview (https://github.com/zserge/webview) bindings for OCaml")
  (depends

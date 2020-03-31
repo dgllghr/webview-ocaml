@@ -12,7 +12,7 @@
 
 (library
  (name webview)
- (public_name webview-ocaml)
+ (public_name webview)
  (c_library_flags (:include c_library_flags.sexp))
  (foreign_stubs
   (language c)
