@@ -9,7 +9,6 @@ module Handle : sig
 
   val eval: t -> string -> (unit, error) result
 
-  val exit: t -> unit
 
   val terminate: t -> unit
 end

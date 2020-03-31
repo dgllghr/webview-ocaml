@@ -20,8 +20,6 @@ module Handle = struct
   let eval h script =
     Wvs.eval h script |> res_of_code ()
 
-  let exit = Wvs.exit
-
   let terminate = Wvs.terminate
 end
 
@@ -52,5 +50,6 @@ let create ?(resizable = true) ?(debug = false) ?(handler = default_cb)
 
 let run_blocking webview =
   Wvs.init webview |> res_of_code () >>= fun () ->
-  Wvs.run ~webview:webview |> res_of_code ()
+  Wvs.run ~webview:webview;
+  Ok ()
 
