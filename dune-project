@@ -17,4 +17,6 @@
     (ppx_cstubs (>= 0.3))
     (ctypes (>= 0.17))
     (ctypes-foreign (>= 0.4))
-    (dune-configurator (>= 2.4))))
+    (dune-configurator (>= 2.4))
+    (extunix (>= 0.2))
+    (uri (>= 3.1))))

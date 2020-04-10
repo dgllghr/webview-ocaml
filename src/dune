@@ -8,7 +8,7 @@
 (rule
   (targets webview_sys.ml webview_stubs.c)
   (deps (:first-dep webview_sys.c.ml) c_flags.lines)
-  (action (run %{bin:ppx_cstubs} %{first-dep} -o %{targets} -- %{read-lines:c_flags.lines} -DWEBVIEW_GTK -DWEBVIEW_IMPLEMENTATION -DWEBVIEW_STATIC)))
+  (action (run %{bin:ppx_cstubs} %{first-dep} -o %{targets} -- %{read-lines:c_flags.lines})))
 
 (library
  (name webview)
@@ -17,6 +17,6 @@
  (foreign_stubs
   (language c)
   (names webview_stubs)
-  (flags (:include c_flags.sexp) -O2 -DWEBVIEW_GTK -DWEBVIEW_IMPLEMENTATION -DWEBVIEW_STATIC))
+  (flags (:include c_flags.sexp) -O2))
  (libraries ctypes ppx_cstubs ctypes.foreign))
 

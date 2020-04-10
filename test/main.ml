@@ -1,11 +1,13 @@
-let make_url n =
-  String.concat "" [
-    "data:text/html,";
-    "%3Chtml%3E%0A%3Chead%3E%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%3Cscript
-    %3E%0A%20%20%20%20window.external.invoke(%22";
-    string_of_int n;
-    "%22)%3B%0A%20%20%3C%2Fscript%3E%0Arunning test%3C%2Fbody%3E%0A%3C%2Fhtml%3E"
-  ]
+let page n = String.concat "" ["<html>
+    <head>
+    </head>
+    <body>
+      <script>window.external.invoke('";
+      string_of_int n;
+      "')</script>
+    </body>
+  </html>"
+]
 
 module WvHandle = Webview.Handle
 
@@ -26,9 +28,9 @@ let () =
   in
 
   let input = 17 in
-  let url = make_url input in
-  let wv = Webview.create
-    ~handler:test_handler "webview-ocaml integration test" url 800 600
+  let url = "data:text/html," ^ (Uri.pct_encode (page input)) in
+  let wv = Webview.create ~handler:test_handler ~debug:true
+    "webview-ocaml integration test" url 800 600
   in
   match Webview.run_blocking wv with
   | Ok () ->
